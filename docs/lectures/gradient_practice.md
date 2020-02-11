@@ -59,9 +59,17 @@ Here are some examples of functions and their gradients:
   **Gradient**: $\nabla f(\vec{x}) = A^T \nabla g(A\vec{x})$. 
 
   * Proof: Let $k(\vec{x}) = \matrix{Ax}$. For  $j = 1,\ldots, n$ the $j^\text{th}$ entry of $k(\vec{x})$ is $k_j(\vec{x}) = \langle A_j, x \rangle$, where $A_j$ is the $j^\text{th}$ row of $A$.  From chain rule we have that $\frac{\partial f}{\partial x_i} = \sum_{j=1}^n \frac{\partial g}{\partial [k(\vec{x})]_j} \cdot \frac{\partial k_j}{\partial x_i}$
+
   * $\frac{\partial k_j}{\partial x_i} = A_{j,i}$ where $A_{j,i}$ is the entry in $A$'s $j^\text{th}$ row and $i^\text{th}$ column. 
+
   * Substituting we have:
-  * $\frac{\partial f}{\partial x_i} = \sum_{j=1}^n A_{j,i}\frac{\partial g}{\partial [k(\vec{x})]_j}$ which we can obeserve is equal to: $\frac{\partial f}{\partial x_i} = \langle A_j, \nabla g(k(\vec{x}) \rangle = \langle A_j, \nabla g(A\vec{x}) \rangle$
+
+  * $\frac{\partial f}{\partial x_i} = \sum_{j=1}^n A_{j,i}\frac{\partial g}{\partial [k(\vec{x})]_j}$ which we can obeserve is equal to: $\frac{\partial f}{\partial x_i} = \langle A_{:,i}, \nabla g(A\vec{x}) \rangle$
+
+    where $A_{:,i}$ denotes the $i^\text{th}$ column of $A$.
+
+    
+
   * So if we stack $\frac{\partial f}{\partial x_1}, \ldots, \frac{\partial f}{\partial x_d}$ into a column vector to for $\nabla f(\vec{x})$ we get $\nabla f(\vec{x}) = A^T \nabla g(A\vec{x})$. 
 
 **This last one is a good one to just memorize! It will come up again and again!**
