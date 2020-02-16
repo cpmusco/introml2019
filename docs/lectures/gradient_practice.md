@@ -64,7 +64,7 @@ Here are some examples of functions and their gradients:
 
   * Substituting we have:
 
-  * $\frac{\partial f}{\partial x_i} = \sum_{j=1}^n A_{j,i}\frac{\partial g}{\partial [k(\vec{x})]_j}$ which we can obeserve is equal to: $\frac{\partial f}{\partial x_i} = \langle A_{:,i}, \nabla g(A\vec{x}) \rangle$
+  * $\frac{\partial f}{\partial x_i} = \sum_{j=1}^n A_{j,i}\frac{\partial g}{\partial [k(\vec{x})]_j}$ which we can obeserve is equal to: $\frac{\partial f}{\partial x_i} = \langle A_j, \nabla g(k(\vec{x}) \rangle = \langle A_{:,i}, \nabla g(A\vec{x}) \rangle$
 
     where $A_{:,i}$ denotes the $i^\text{th}$ column of $A$.
 
@@ -96,7 +96,7 @@ $$L(\vec{\beta}) = \|\vec{y} - X\vec{\beta}\|_2^2 = \langle\vec{y} - X\vec{\beta
 
 So, by **linearity**, 
 
-$$\nabla L(\vec{\beta}) = \nabla\langle\vec{y},\vec{y}\rangle + \nabla\langle X\vec{\beta}, X\vec{\beta}\rangle - 2 \nabla\langle \vec{y},x\vec{\beta}\rangle$$.
+$$\nabla L(\vec{\beta}) = \nabla\langle\vec{y},\vec{y}\rangle + \nabla\langle X\vec{\beta}, X\vec{\beta}\rangle - 2 \nabla\langle \vec{y},X\vec{\beta}\rangle$$.
 
 Let's figure out each term seperately:
 
@@ -104,11 +104,11 @@ Let's figure out each term seperately:
 
 * $\nabla \langle X\vec{\beta}, X\vec{\beta}\rangle = \nabla \|X\vec{\beta}\|_2^2$. We can evaluate this gradient using the first and last example in our gradient practice section: it's equal to $\|X\vec{\beta}\|_2^2 = X^T \nabla \|\vec{z}\|_2^2$ where $\vec{z} = X\vec{\beta}$.  
 
-  So we have $\|X\vec{\beta}\|_2^2 = X^2(2\vec{z}) =  2X^TX\vec{\beta}$.
+  So we have $\|X\vec{\beta}\|_2^2 = X^T(2\vec{z}) =  2X^TX\vec{\beta}$.
 
 * Finally, we note that $\langle \vec{y},X\vec{\beta} \rangle = \vec{y}^T X \beta = \langle X^T \vec{y}, \beta\rangle$ (here I'm using that $(\vec{y}^T X)^T = X^T\vec{y}$). 
 
-  So $\nabla \langle \vec{y},X\vec{\beta} = \nabla \langle X^T \vec{y}, \beta\rangle = X^T \vec{y}$ using example 1 from the previous section. 
+  So $\nabla \langle \vec{y},X\vec{\beta}\rangle = \nabla \langle X^T \vec{y}, \beta\rangle = X^T \vec{y}$ using example 1 from the previous section. 
 
 Putting it all together, we get that 
 
