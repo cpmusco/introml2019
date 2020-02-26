@@ -64,7 +64,7 @@ Here are some examples of functions and their gradients:
 
   * Substituting we have:
 
-  * $\frac{\partial f}{\partial x_i} = \sum_{j=1}^n A_{j,i}\frac{\partial g}{\partial [k(\vec{x})]_j}$ which we can obeserve is equal to: $\frac{\partial f}{\partial x_i} = \langle A_j, \nabla g(k(\vec{x}) \rangle = \langle A_{:,i}, \nabla g(A\vec{x}) \rangle$
+  * $\frac{\partial f}{\partial x_i} = \sum_{j=1}^n A_{j,i}\frac{\partial g}{\partial [k(\vec{x})]_j}$ which we can obeserve is equal to: $\frac{\partial f}{\partial x_i} = \langle A_{:,i}, \nabla g(k(\vec{x})) \rangle = \langle A_{:,i}, \nabla g(A\vec{x}) \rangle$
 
     where $A_{:,i}$ denotes the $i^\text{th}$ column of $A$.
 
