@@ -1,0 +1,279 @@
+\documentclass[10pt]{article}
+\usepackage{titlesec}
+\usepackage{geometry}
+\geometry{verbose,tmargin=.9in,bmargin=.9in,lmargin=1.0in,rmargin=1.0in}
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage{url}
+\usepackage{color}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[colorlinks=true, linkcolor=red, urlcolor=blue, citecolor=gray]{hyperref}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{etoolbox}
+
+\definecolor{nyuDarkPurple}{HTML}{330662}
+\definecolor{nyuOfficialPurple}{HTML}{57068c}
+
+\newcommand{\spara}[1]{\vspace{.5em}\noindent {\large\sffamily\textcolor{nyuOfficialPurple}{#1}}}
+\titleformat{\section}[hang]{\Large\sffamily\color{nyuDarkPurple}}{\thesection}{1em}{}
+\titleformat{\subsection}[hang]{\large\sffamily\color{nyuDarkPurple}}{\thesection}{1em}{}
+\titleformat{\subsubsection}[hang]{\normalsize\sffamily\color{gray}}{\thesection}{1em}{}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{\includegraphics[width=4cm]{tandon_long_color.eps}}
+\rhead{\thepage}
+\pagenumbering{gobble}
+
+\setcounter{secnumdepth}{0}
+
+% math commands
+\DeclareMathOperator{\R}{\mathbb{R}}
+
+\begin{document}
+	
+\begin{center}
+	\normalsize
+	New York University Tandon School of Engineering
+	
+	Computer Science and Engineering
+	\medskip
+	
+	\large
+	CS-UY 4563 (ECE-UY 4563)
+	 
+	Introduction to Machine Learning, Spring 2020
+	\medskip
+	
+	\normalsize
+	Professor Christopher Musco
+	
+	Mondays, Wednesdays 9:00-10:20am, Jacobs Building, JABS 775B.
+\end{center} 
+
+\subsection{PROFESSOR CONTACT}
+\begin{description}\itemsep0em 
+	\item[Email:] cmusco@nyu.edu.
+	\item[Office:] 370 Jay St., \#1105 (Floor 11).
+	\item[Office Hours:] Wednesdays, 10:30-12:30pm, or by appointment.
+\end{description} 
+
+\subsection{TEACHING ASSISTANTS}
+\begin{description}\itemsep0em 
+	\item[Prathamesh Dharangutte:] prathamesh.d@nyu.edu.
+	\item[Zige Wang:] zw1923@nyu.edu.
+	\item[Office Hours:] Time and location TBA.
+\end{description} 
+
+\subsection{ESSENTIAL LINKS }
+\begin{description}\itemsep0em 
+	\item[Course Web page:] \url{https://www.chrismusco.com/introml/}. 
+	\item[Piazza Forum (for questions):] \url{https://piazza.com/class/k5psbvecgix5t2}
+	\item[NYU Classes (for turning in work):]\hspace{5em} \\ \url{https://newclasses.nyu.edu/portal/site/670a4d41-faa3-423f-b052-79b7f55aaff7}
+	\item[Course Git repo:] \url{https://github.com/cpmusco/introml}, where you can directly download up-to-date course material (e.g. labs, homeworks, lecture slides). Note that this is a fork of the course repository used in previous years, and material will differ: please make sure you download assignments and labs from this link only!
+\end{description} 
+
+
+\subsection{COURSE DESCRIPTION}
+This course provides an introduction to machine learning and statistical pattern recognition, through a mixture of hands-on exercises and theoretical foundations.
+We will cover fundamental algorithms for function fitting (regression), classification methods (logistic regression, support vector machines, decision trees), model selection, generalization, neural networks, basic numerical optimization, dimensionality reduction, unsupervised learning, boosting, and a number of other topics. The course includes programming exercises on real and synthetic data using current software tools. A number of applications are demonstrated in audio and image processing, text classification, and more. 
+
+\subsection{COURSE PREREQUISITES}
+\emph{Modern machine learning uses a lot of math!} Probably more than any other subject in computer science that you will study as an undergraduate. Fortunately, however, the {breadth} of math used is relatively narrow: besides basic calculus, you can get  very far with an understanding of just probability and linear algebra. That understanding needs to be \emph{solid} for you to succeed in this course. 
+Formally our prerequisites are as follows, and I list specific topics you should know from probability and linear algebra:
+\begin{enumerate}[leftmargin=*]
+	\item \textbf{Data Structures and Algorithms}. (CS-UY 1134, ENGR-UH 3510, CS-UH 1050, or CSCI-SHU 210) 
+	\item \textbf{Probability} (MA-UY 2222, 2224, 2233, 3012, 3014, or 3514, MATH-UH 2011Q, ENGR-UH 2010Q, or MATH-SHU 235)
+	\begin{itemize}
+		\item Random variables, discrete and continuous probability distributions, expectation, variance, covariance, correlation, conditional and joint probability, Gaussian random variables, law-of-large-numbers. 
+	\end{itemize}
+	\item \textbf{Linear Algebra} (MA-UY 2034, 3044, or 3054, MATH-UH 1022 or 1023, or MATH-SHU 140 or 141)
+		\begin{itemize}
+			\item Matrices and vectors, vector inner and outer products, matrix-vector and matrix-matrix multiplication, vector norms (e.g., Euclidean), matrix norms (e.g., Frobenius, operator), triangle inequality, Cauchy-Schwarz, solving systems of linear equations, linear independence, matrix rank, column/row span, null space, orthogonal matrices, basics of eigenvectors, eigenvalues, and eigendecomposition.
+		\end{itemize}
+	
+You also need to be a good programmer for this course. All coding exercises and assignments will be in Python. No prior experience specifically with Python is required, but I will not be focused on teaching the language, besides showing you specific tools useful for machine learning. So if you are not familiar with the basics, you will need to spend time familiarizing yourself. See the TAs if you run into any issues!
+\end{enumerate}
+
+\subsection{COURSE STRUCTURE AND GRADING}
+There are two class meetings per week, involving lecture, demonstrations, and ungraded exercises. You will also work on assignments at home, take two in-class tests, and complete a final project. Details follow:
+
+	\begin{description}\itemsep0em 
+		\item[Class participation (10\% of grade).] This grade captures how much you contribute to your own learning and that of your peers. Since different students have different styles, there are \emph{many ways} to earn full credit for this part of the course! You can actively and vocally participate in class. You can ask questions, or answer those of your peers, on the class Piazza forum. You can attend and actively contribute to office hours (either mine or those of the TAs). Etc. 
+		\item[Weekly programming labs and written problem sets (30\% of grade).] These assignments are completed at home and reinforce the material discussed in class. I expect a lot of your learning to occur while working on these exercises, and investing time on them is the best way to prepare for the exams and final project. Assignments and their due dates will be posted on the course webpage. Late assignments will only be accepted if there are extenuating circumstances and you have obtained prior permission from the instructor.
+		\item[Two in-class midterm exams (20\% each, 40\% total).] For both exams you will be allowed a cheat-sheet (a two-sided piece of paper with whatever information you want on it).
+		\item[Final project (20\% of grade)] To be completed in teams of 2. This is a completely open ended machine learning project: the goal is to pick a problem you are interested in that is amenable to machine learning, collect whatever data you need to address that problem, and apply tools learned in class to the problem. More details will be released later in the semester!
+	\end{description}
+
+
+\subsection{COURSE POLICIES}
+\medskip\noindent\textbf{Programming labs:} Turned in via NYU Classes. 
+
+\medskip\noindent\textbf{Written problem sets:} Turned in via NYU Classes. While not required, I encourage students to prepare written problem sets in LaTeX or Markdown (with math support.) Students will receive 10\% extra credit on the Problem Set 1 for preparing it in LaTeX or Markdown. 
+
+\medskip\noindent\textbf{Homework collaboration policy:}
+\begin{itemize}
+ \item \textit{Discussion of high-level ideas for solving problems sets or labs is allowed, but all solutions and any code must be written up independently.} This reflects the reality that machine learning research and implementation are rarely done alone. However, any machine learning practitioner must be able to communicate and work through the details of a solution individually.
+ \item \textit{Students must name any collaborators they discussed problems with at the top of each assignment (list at the top of each problem separately).} 
+ \item \textit{Do not write or code in parallel with other students.} If problem ideas are discussed, solutions should be written or implemented at a later time, individually. I take this policy very seriously. Do not paraphrase, change variables, or in any way copy another students solution.
+ \end{itemize}
+
+
+	
+\medskip\noindent\textbf{Midterm:} The exams will be held during class on \textbf{March 9th} and \textbf{April 20th}. Make sure you are available on those days. If there is any issue, let me know ASAP. 
+%attend clas Please let me know ASAP if you will not be able to attend on either of those days so that we can make alternative arrangements.
+
+\medskip\noindent\textbf{Grade changes:} Fair grading is very important to me. If you feel that you were incorrectly docked points on an assignment or exam, please contact the TAs first, who will escalate to me as necessary. Do not wait until the end of the semester! If you notice something off, better to ask ASAP.
+
+\medskip\noindent\textbf{Questions about performance:} If you are struggling in the class, contact me as soon as possible so that we can discuss what's not working, and how we can work together to ensure you are mastering the material. It is difficult to address questions about performance at the end of the semester, or after final grades are submitted: by Tandon policy no extra-credit or makeup work can be used to improve a students grade once the semester closes. So if you are worried about your grade, seek help from me and the TAs \emph{early}. 
+
+\subsection{READINGS}
+\textit{There is no textbook to purchase}. Primary course material will consist of lecture slides and my handwritten notes from class (I use a tablet as a digital whiteboard and make those notes available.) To supplement that information, optional readings will be posted from each lecture. Many will come from:
+
+\begin{itemize}
+	\item \textit{An Introduction to Statistical Learning}, by James, Witten, Hastie, and Tibshirani. A free version of the book is available here \url{http://faculty.marshall.usc.edu/gareth-james/ISL/}.
+	\item \textit{Elements of Statistical Learning}, by Hastie, Tibshirani, and Friedman for some more advanced topics. A free version of the book is available here \url{https://web.stanford.edu/~hastie/ElemStatLearn/}.
+	\item \textit{Python Machine Learning} by Raschka is a good reference for issues with Python implementations and the labs. You can access it at \url{http://file.allitebooks.com/20151017/Python%20Machine%20Learning.pdf}. Note that the this book may be slightly out of date with the current  Python version. 
+\end{itemize}
+
+\subsection{COURSE SCHEDULE}
+The following schedule is tentative and subject to change. An updated schedule will be maintained at  \url{https://www.chrismusco.com/introml/}. 
+\subsubsection{UNIT 1: Regression and Function Fitting}
+\begin{enumerate}\itemsep0em 
+	\item 1/27 Introduction to Machine Learning
+	\item 1/29 Simple Linear Regression, Loss Functions
+	\item 2/3 Multivariate Linear Regression, Data Transformations
+	\item 2/5 Model Selection, Cross Validation, Regularization
+\end{enumerate}
+
+\noindent\textit{2/9: Last day to drop and not receive a grade of ``W''.}
+\subsubsection{UNIT 2: Classification}
+\begin{enumerate}\itemsep0em 
+	\setcounter{enumi}{4}
+	\item 2/10 Classification, Naive Bayes
+	\item 2/12 The Bayesian Perspective cont.
+	
+	\textit{2/17 PRESIDENTS DAY, NO CLASS}
+	\item 2/19 Logistic Regression, Support Vector Machines
+	\item 2/24 Optimization, Gradient Descent, SGD
+	\item 2/26, The Kernel Trick
+	\item 3/2, Learning Theory, Generalization
+	\item 3/4, Overflow/review day
+	 
+	 3/9, Midterm 1 
+\end{enumerate}
+\subsubsection{UNIT 3: Beyond Linear Methods: Neural Networks}
+\begin{enumerate}\itemsep0em 
+	\setcounter{enumi}{11}
+	\item 3/11, Boosting, Decision Trees
+	
+	\textit{3/16, SPRING BREAK, NO CLASS}
+	
+	\textit{3/18, SPRING BREAK, NO CLASS}
+	\item 3/23, Neural Networks 1
+	\item 3/25, Neural Networks 2
+	\item 3/30, Convolution, Feature Extraction, Edge Detection
+	\item 4/1, Convolutional and Deep Networks
+	\item 4/6, Time Series and Sequential Prediction
+\end{enumerate}
+\subsubsection{UNIT 3: Unsupervised Learning}
+\begin{enumerate}\itemsep0em 
+	\setcounter{enumi}{17} 
+	\item 4/8, Dimensionality Reduction 1: Principal Component Analysis
+	\item 4/13, Dimensionality Reduction 2: Semantic Embeddings, Recommendation Systems
+	\item 4/15, Clustering, K-Means, Gaussian Mixture Models
+	 
+	 4/20, Midterm 2
+	\item 4/22, Graphs and Spectral Clustering
+\end{enumerate}
+\subsubsection{UNIT 4: Select Topics}
+\begin{enumerate}\itemsep0em 
+	\setcounter{enumi}{21}
+	\item 4/27, TBA (possible guest speaker)
+	\item 4/29, Introduction to Online Learning 
+	\item 5/4, Introduction to Reinforcement Learning
+	\item 5/6, Project Presentations
+	\item 5/11, Project Presentations
+\end{enumerate}
+
+
+\subsection{COURSE OBJECTIVES}
+\begin{enumerate}
+	\item Students will learn how to view and formulate real world problems in the language of machine learning. Categories of problems include those involving prediction, classification, pattern recognition, and decision making.
+	\item Through in-class demonstrations and at-home programming labs, students will gain experience applying the most popular and most successful machine learning algorithms to example problems. The goal is to prepare students to use these tools in industrial or academic positions.
+	\item In addition to experimental exploration, students will learn how theoretical analysis can help explain the performance of machine learning algorithms, and ultimately guide how they are used in practice, or lead to the design of entirely new methods.
+	\item Students will build experience with the most important mathematical tools used in machine learning, including probability, statistics, and linear algebra. This experience will prepare them for more advanced coursework in the subject, or research at the undergraduate or graduate level. 
+	\item A major goal is to prepare students to read and understand contemporary research in machine learning, including papers from NeurIPS, ICML, ICLR, AAAI, JMLR, and other major machine learning venues. Since machine learning is a rapidly evolving field, many of its most powerful tools today may no longer be relevant in 15 years. The goal is to provide students with a theoretical foundation that will allow them to keep up with changes in the field.
+\end{enumerate}
+\emph{At the end of this course, every student should feel confident holding a conversation about machine learning with anyone, no matter their experience in the field. This would include a potential employer, a professor or graduate student working in the field, a stranger on the subway, or a grandparent.}
+
+\subsection{ADDITIONAL INFORMATION}
+
+\subsubsection{MOSES CENTER STATEMENT OF DISABILITY.}
+
+If you are student with a disability who is requesting accommodations, please contact New York University's Moses Center for Students with Disabilities (CSD) at 212-998-4980 or mosescsd@nyu.edu.  You must be registered with CSD to receive accommodations.  Information about the Moses Center can be found \href{https://www.nyu.edu/students/communities-and-groups/students-with-disabilities.html}{here} The Moses Center is located at 726 Broadway on the 3rd floor.
+
+\subsubsection{NYU SCHOOL OF ENGINEERING POLICIES AND PROCEDURES ON ACADEMIC MISCONDUCT.}
+The complete Student Code of Conduct can be found \href{https://engineering.nyu.edu/campus-and-community/student-life/office-student-affairs/policies/student-code-conduct}{here}.
+
+\begin{enumerate}[label=\Alph*.]\itemsep0em 
+
+\item Introduction: The School of Engineering encourages academic excellence in an environment that promotes honesty, integrity, and fairness, and students at the School of Engineering are expected to exhibit those qualities in their academic work. It is through the process of submitting their own work and receiving honest feedback on that work that students may progress academically. Any act of academic dishonesty is seen as an attack upon the School and will not be tolerated. Furthermore, those who breach the School’s rules on academic integrity will be sanctioned under this Policy. Students are responsible for familiarizing themselves with the School’s Policy on Academic Misconduct.
+
+\item	Definition: Academic dishonesty may include misrepresentation, deception, dishonesty, or any act of falsification committed by a student to influence a grade or other academic evaluation. Academic dishonesty also includes intentionally damaging the academic work of others or assisting other students in acts of dishonesty. Common examples of academically dishonest behavior include, but are not limited to, the following:
+\begin{enumerate}[label=\arabic*.]\itemsep0em 
+	\item	Cheating: intentionally using or attempting to use unauthorized notes, books, electronic media, or electronic communications in an exam; talking with fellow students or looking at another person’s work during an exam; submitting work prepared in advance for an in-class examination; having someone take an exam for you or taking an exam for someone else; violating other rules governing the administration of examinations.
+	\item	Fabrication:  including but not limited to, falsifying experimental data and/or citations.
+	\item	Plagiarism: intentionally or knowingly representing the words or ideas of another as one’s own in any academic exercise; failure to attribute direct quotations, paraphrases, or borrowed facts or information. 
+	\item	Unauthorized collaboration: working together on work meant to be done individually.
+	\item	Duplicating work: presenting for grading the same work for more than one project or in more than one class, unless express and prior permission has been received from the course instructor(s) or research adviser involved. 
+	\item	Forgery: altering any academic document, including, but not limited to, academic records, admissions materials, or medical excuses.
+\end{enumerate}
+\end{enumerate}
+
+\subsubsection{NYU SCHOOL OF ENGINEERING POLICIES AND PROCEDURES ON EXCUSED ABSENCES.}
+The complete policy can be found \href{https://engineering.nyu.edu/campus-and-community/student-life/office-student-affairs/policies}{here}.
+\begin{enumerate}[label=\Alph*.]\itemsep0em 
+	\item Introduction:  An absence can be excused if you have missed no more than 10 days of school. If an illness or special circumstance has caused you to miss more than two weeks of school, please refer to the section labeled Medical Leave of Absence.
+	
+	\item Students may request special accommodations for an absence to be excused in the following cases:
+
+	\begin{enumerate}[label=\arabic*.]\itemsep0em 
+		\item	Medical reasons
+		\item	Death in immediate family
+		\item	Personal qualified emergencies (documentation must be provided)
+		\item	Religious Expression or Practice
+	
+	\end{enumerate}
+
+\end{enumerate}
+Deanna Rayment, deanna.rayment@nyu.edu, is the Coordinator of Student Advocacy, Compliance and Student Affairs and handles excused absences. She is located in 5 MTC, LC240C and can assist you should it become necessary. 
+
+\subsubsection{NYU SCHOOL OF ENGINEERING ACADEMIC CALENDAR}
+The full calendar can be found \href{https://www.nyu.edu/registrar/calendars/university-academic-calendar.html}{here}.
+%The last day of the final exam period is Friday, December 20, 2019. Final exam dates for undergraduate courses will not be determined until later in the semester. Final exams for graduate courses will be held on the last day of class during the week of December 16, 2019 -- December 20, 2019.  If you have two final exams at the same time, report the conflict to your professors as soon as possible. Do not make any travel plans until the exam schedule is finalized. 
+Please pay attention to notable dates such as Add/Drop, Withdrawal, etc. For confirmation of dates or further information, please contact Susana Garcia: \href{mailto:sgarcia@nyu.edu}{sgarcia@nyu.edu}. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

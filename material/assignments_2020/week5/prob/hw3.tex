@@ -1,0 +1,105 @@
+\documentclass[10pt]{article}
+\usepackage{titlesec}
+\usepackage{geometry}
+\geometry{verbose,tmargin=.9in,bmargin=.9in,lmargin=1.0in,rmargin=1.0in}
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage{url}
+\usepackage{color}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[colorlinks=true, linkcolor=red, urlcolor=blue, citecolor=gray]{hyperref}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{etoolbox}
+\newcommand{\bs}[1]{\boldsymbol{#1}}
+\newcommand{\bv}[1]{\mathbf{#1}}
+\usepackage{listings}
+\usepackage{bbm}
+
+\definecolor{nyuDarkPurple}{HTML}{330662}
+\definecolor{nyuOfficialPurple}{HTML}{57068c}
+
+\newcommand{\spara}[1]{\vspace{.5em}\noindent {\large\sffamily\textcolor{nyuOfficialPurple}{#1}}}
+\titleformat{\section}[hang]{\Large\sffamily\color{nyuDarkPurple}}{\thesection}{1em}{}
+\titleformat{\subsection}[hang]{\large\sffamily\color{nyuDarkPurple}}{\thesection}{1em}{}
+\titleformat{\subsubsection}[hang]{\normalsize\sffamily\color{gray}}{\thesection}{1em}{}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{\includegraphics[width=4cm]{tandon_long_color.eps}}
+\rhead{\thepage}
+\pagenumbering{gobble}
+
+\setcounter{secnumdepth}{0}
+
+% math commands
+\DeclareMathOperator{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+
+\begin{document}
+	
+\begin{center}
+	\normalsize
+	New York University Tandon School of Engineering
+	
+	Computer Science and Engineering
+	\medskip
+	
+	\large
+	CS-UY 4563: Written Homework 3. 
+	
+	Due Wednesday, March 4th, 2020, 11:59pm.
+	\medskip
+	
+	\normalsize 
+	\noindent \emph{Collaboration is allowed on this problem set, but solutions must be written-up individually. Please list the names of any collaborators at the top of your solution set, or write ``No Collaborators" if you worked alone.}
+	\medskip
+\end{center} 
+
+\subsection{Problem 1: Practice with Probabilistic Models (15pts)}
+Describe a probabilistic model for each of the following data sets. There is no right answer, but your model should be reasonable and plausibly characterize the data. For each model, \textbf{separately list what parameters} which would need to be learned from past data. Also, be careful not to include in the model any data variables not explicitly listed!
+\begin{enumerate}[(a)]
+	\item Each data example corresponds to an apartment and has parameters: $$(x_1,x_2, y) = (\text{ZIP code}, \text{size}, \text{price}).$$ The ``ZIP code'' is for where the apartment is located, ``size'' is the apartment's square footage, and ``price'' is the current monthly rental price in dollars. 
+
+	\item Each data example corresponds to a minute in the day and has parameters: $$(x,y) = (\text{time}, \text{number of riders}).$$ The ``time''  is a time of day specified in the number of minutes past midnight (e.g. 9:32am is represented as $572 = 9\times 60 + 32$) and ``number of riders'' is the current number of riders on the NYC subway system.
+	
+	\item Each data example corresponds to a Netflix show and has parameters: $$(\vec{x}_1, x_2, y) = (\text{show description}, \text{genre}, \text{rating}).$$  The ``show description'' is a binary bag-of-words vector corresponding to the text summary of a show, ``genre'' is a category like documentary, drama, romcom, historical fiction, etc, and ``rating'' is an average numerical user rating.
+	
+\end{enumerate}
+
+\subsection{Problem 2: Gaussian Naive Bayes (15pts)}
+In class it was briefly mentioned that the Naive Bayes Classifier can be extended to predictor variables with continuous values (instead of just binary variables). We will derive such an approach here
+
+Consider a data set where each example $(\vec{x},y)$ contains a data vector $\vec{x}\in \R^d$ and a label $y\in \{0,1\}$. Each $y$ is modeled a \href{https://en.wikipedia.org/wiki/Bernoulli_distribution}{Bernoulli random variable}, which equals $1$ with probability $p$ and $0$ with probability $1-p$. To model $\vec{x}$ we have two lists of mean/variances pairs: 
+\begin{align*}
+&(\mu_{0,1}, \sigma_{0,1}^2), (\mu_{0,2}, \sigma_{0,2}^2), \ldots, (\mu_{0,d}, \sigma_{0,d}^2)& &\text{and}& &(\mu_{1,1}, \sigma_{1,1}^2), (\mu_{1,2}, \sigma_{1,2}^2), \ldots, (\mu_{1,d}, \sigma_{1,d}^2).
+\end{align*} 
+If $y$ equals $0$, then the $j^\text{th}$ entry of $\vec{x}$ is modeled as an \emph{independent} Gaussian (normal) random variable with mean $\mu_{0,j}$ and variance $\sigma_{0,j}^2$. Alternatively, if $y$ equals $1$, then the $j^\text{th}$ entry of $\vec{x}$ is modeled as an {independent}  Gaussian random variable with mean $\mu_{1,j}$ and variance $\sigma_{1,j}^2$.
+\begin{enumerate}[(a)]
+	\item Given a training data set $(\vec{x}_1,y_1), \ldots, (\vec{x}_n,y_n)$ write down expressions for estimating all model parameters $\mu_{i,j}$ and  $\sigma_{i,j}^2$ from the data.
+	
+	\item Given a new unlabled predictor vector $\vec{x}_{new}$ we would like to predict class label ${y}_{new}$ using a \emph{maximum a posterior} (MAP) estimate. In other words, we want to choose ${y}_{new}$ to maximize the posterior probability $p({y}_{new} \mid \vec{x}_{new} )$. Write down an expression for $p({y}_{new} \mid \vec{x}_{new} )$ using Bayes Rule.
+	
+	\item Using your result from part (b) write down a final mathematical equation (or pseudocode) for computing $p({y}_{new}=0\mid \vec{x}_{new} )$ and $p({y}_{new}=1\mid \vec{x}_{new})$. \textbf{Hint:} A correct answer should involved the PDF of a Gaussian random variable, and incorporate all model parameters $\mu_{i,j}$ and  $\sigma_{i,j}^2$.
+	
+	\item How can your answer from part (c) be simplified if you only seek to compute $C\cdot p({y}_{new}\mid \vec{x}_{new} )$ for some constant $C$ you choose? What if you only seek to compute $B\cdot\log\left(C\cdot p({y}_{new} \mid \vec{x}_{new} )\right)$ for some constants $B,C$ you choose?
+	Can either or both of these simplified expression be used in deciding on the MAP estimate for $y_{new}$?
+\end{enumerate}
+
+\subsection{Problem 3: Bayesian Central Tendency (10pts)}
+Let's revisit Question 3 on Written Homework 1 from a Bayesian perspective. This was the question about loss functions for measures of central tendency. 
+\begin{enumerate}[(a)]
+	\item Suppose we have a data set of scalar numbers $x_1, \ldots, x_n$. Assume a Bayesian probabilistic model in which the numbers are drawn from a Gaussian distribution with unknown mean $\mu$ and variance $\sigma^2$. We have no prior information on $\mu$ and  $\sigma^2$: we assume all parameters are equally likely. Prove that the sample mean $\hat{\mu} = \frac{1}{n}\sum_{i=1}^n x_i$ is a MAP estimate for the unknown parameter $\mu$.
+	
+	\item Now assume a Bayesian probabilistic model in which the numbers are drawn from a \href{https://en.wikipedia.org/wiki/Laplace_distribution}{Laplace Distribution} with unknown mean $\mu$ and variance $2b^2$. Prove that the sample median is a MAP estimate for the unknown parameter $\mu$. \textbf{Hint:} Look back at Homework 1.
+
+	\item (\textbf{Extra Credit -- 5pt}) Assume a Bayesian probabilistic model in which the numbers are drawn from a uniform distribution centered at $\mu$ and of width $2b$. I.e. each $x_i$ is drawn uniformly from the interval $[\mu-b, \mu + b]$. Further assume that $b$ itself is modeled as a Gaussian random variable with mean 0 and variance 1. So smaller values of $b$ are more likely. What is a MAP estimate for $\mu$?
+\end{enumerate}
+
+\end{document}
